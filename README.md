@@ -1,6 +1,6 @@
 # islandis-login
 
-Library to make life easier for you --> **Handle the Island.is Login.**
+Library to make life easier for you => **Handle the Island.is Login.**
 
 To get started with Island.is Identification and Authentication Services (IAS) you'll need to apply: [vefur.island.is/innskraningarthjonusta/um/](https://vefur.island.is/innskraningarthjonusta/um/)
 
@@ -78,13 +78,13 @@ loginIS
 
 `mobile` is not always present, it depends on if "Rafræn Skilríki" or "Íslykill" is used or not and other factors. The phonenumber is only delivered sometimes by Island.is so we can't count on it being present even if we force the user to use "Rafræn skilríki".
 
-`authenticationMethod` will be "Íslykill" if IceKey is used during login and "Rafræn Skilríki" if "Rafræn Skilríki" were used.
+`authenticationMethod` will be "Íslykill" if IceKey is used during login and "Rafræn Skilríki" if "Rafræn Skilríki" was used.
 
-You can force the user to use "Rafræn skilríki" by adding &qaa=4 to the login link e.g. https://innskraning.island.is/?id=advania.is&qaa=4
+You can force the user to use "Rafræn skilríki" by adding &qaa=4 to the login link e.g. https://innskraning.island.is/?id=advania.is&qaa=4.
 
-`authId` can be provided by adding it to the original login link, e.g. https://innskraning.island.is/?id=advania.is&authId=11111111-1111-1111-1111-111111111111
+`authId` can be provided by adding it to the original login link, e.g. https://innskraning.island.is/?id=advania.is&authId=11111111-1111-1111-1111-111111111111.
 
-The `authId` will persist through the whole process,`authId` must be a valid GUID. This `authId` can e.g. be used to make sure that the login attempt was made by you.
+The `authId` will persist throughout the whole process,`authId` must be a valid GUID. This `authId` can e.g. be used to make sure that the login attempt was made by you.
 
 You should compare the value in the `userAgent` field to the value the user has client side to make sure that the request originated from the same user.
 
@@ -92,7 +92,7 @@ This is all covered in more detail in the implementation guide: [vefur.island.is
 
 #### Errors
 
-List of potential errors that you might encounter calling `.verify()`:
+List of potential errors that you might encounter calling **`.verify()`**:
 
 ```json
 {
@@ -126,7 +126,7 @@ List of potential errors that you might encounter calling `.verify()`:
 
 [Myntkaup.is](https://myntkaup.is/) - Myntkaup is Iceland's best way to buy and sell Bitcoin. 🚀
 
-Do you have a project that should be here? Just send a pull request!
+[Your Project here] - Do you have a project that should be here? Just ping us!
 
 ## Made with ☕ + 🍺 by
 
