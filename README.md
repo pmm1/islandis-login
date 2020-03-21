@@ -20,7 +20,7 @@ This library helps with validating and verifying the SAML token and the provided
 
 Use the constructor function to pass in the kennitala of the company you are implementing the IAS for.
 
-There is one public function provided ➡️ **`.verify()`**. Pass the token you receive from Island.is into this function and the library will make the magic happen.
+There is one public function provided => **`.verify()`**. Pass the token you receive from Island.is into this function and the library will make the magic happen.
 
 **IslandIsLogin** validates the signature according to the [technical specifications](https://vefur.island.is/innskraningarthjonusta/taeknilegar-upplysingar/) provided by the Ísland.is IAS.
 
