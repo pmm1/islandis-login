@@ -26,6 +26,12 @@ IslandIsLogin validates the signature according to the [technical specifications
 
 ### Example usage
 
+To install the module using npm:
+
+```shell
+$ npm i islandis-login --save
+```
+
 ```js
 const IslandISLogin = require("islandis-login");
 
