@@ -6,6 +6,8 @@ To get started with Island.is Identification and Authentication Services (IAS) y
 
 Once you've registered your company you can use this library to handle all the **boring stuff** for you.
 
+### How it works
+
 In your application to Island.is IAS you'll be required to provide a callback URI to which a token will be POSTed on user login attempts (login attempts initiated via _innskraning.island.is/?id=yourcompany.is_).
 
 The token the Ísland.is IAS returns to the service provider, for decoding by the service provider, is a digitally signed SAML 2 token encoded in Base 64 and UTF-8.
