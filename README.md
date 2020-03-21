@@ -10,11 +10,11 @@ In your application to Island.is IAS you'll be required to provide a callback UR
 
 The token the Ísland.is IAS returns to the service provider, for decoding by the service provider, is a digitally signed SAML 2 token encoded in Base 64 and UTF-8.
 
-The SAML message returned by IAS will be digitally signed with a certificate issued by Auðkenni ehf. (Traustur bunadur). Furthermore, the message will have been transformed with xml-exc-c14n (**Fu\*k! XML... boring right?**), prior to being digested with SHA256 and signed with a 2048-bit RSA key.
+The SAML message returned by IAS will be digitally signed with a certificate issued by Auðkenni ehf. (Traustur bunadur). Furthermore, the message will have been transformed with xml-exc-c14n (**Sh\*t! XML... boring right?**), prior to being digested with SHA256 and signed with a 2048-bit RSA key.
 
 This library helps with validating and verifying the SAML token and the provided signature.
 
-### Usage
+## Usage
 
 Use the constructor to pass in the kennitala of the company you are implementing the IAS for.
 
@@ -22,7 +22,7 @@ There is one public function provided --> `.verify()`. Pass the token you receiv
 
 IslandIsLogin validates the signature according to the [technical specifications](https://vefur.island.is/innskraningarthjonusta/taeknilegar-upplysingar/) provided by the Ísland.is IAS.
 
-#### Example usage
+### Example usage
 
 ```js
 const IslandISLogin = require("islandis-login");
@@ -34,7 +34,7 @@ const loginIS = new IslandISLogin({
 loginIS
     .verify(token)
     .then(user => {
-        // Token is valid
+        // Token is valid, return user object
         console.log("User object ");
         console.log(user);
     })
@@ -67,11 +67,11 @@ loginIS
 
 `authenticationMethod` will be "Íslykill" if IceKey is used during login and "Rafræn Skilríki" if "Rafræn Skilríki" were used.
 
-You can force the user to use "Rafræn skilríki" by adding &qaa=4 to the link e.g. https://innskraning.island.is/?id=advania.is&qaa=4
+You can force the user to use "Rafræn skilríki" by adding &qaa=4 to the login link e.g. https://innskraning.island.is/?id=advania.is&qaa=4
 
-`authId` can be provided by adding it to the original sign-in link, e.g. https://innskraning.island.is/?id=advania.is&authId=11111111-1111-1111-1111-111111111111
+`authId` can be provided by adding it to the original login link, e.g. https://innskraning.island.is/?id=advania.is&authId=11111111-1111-1111-1111-111111111111
 
-The 'authId' will persist throught the whole process,`authId` must be a valid GUID. This 'authId' can e.g. be used to make sure that the login attempt was made by you.
+The `authId` will persist through the whole process,`authId` must be a valid GUID. This `authId` can e.g. be used to make sure that the login attempt was made by you.
 
 You should compare the value in the `userAgent` field to the value the user has client side to make sure that the request originated from the same user.
 

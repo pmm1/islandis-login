@@ -28,9 +28,6 @@ const IslandISLogin = function() {
     }
 
     IslandISLogin.prototype.verify = token => {
-        console.log("IslandIs verify function called, this:");
-        console.log(this);
-
         const xml = new Buffer.from(token, "base64").toString("utf8");
 
         return new Promise((resolve, reject) => {
