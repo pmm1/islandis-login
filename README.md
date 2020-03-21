@@ -122,13 +122,13 @@ List of potential errors that you might encounter:
 }
 ```
 
-## Projects utilizing the library 🚀
+## Projects utilizing the library
 
-[Myntkaup.is](https://myntkaup.is/) - Myntkaup is Iceland's best way to buy and sell Bitcoin.
+[Myntkaup.is](https://myntkaup.is/) - Myntkaup is Iceland's best way to buy and sell Bitcoin. 🚀
 
 ## Made with ☕ & 🍺 by
 
-This library was made by the team at [Mojo.is](https://www.mojo.is/) - Hire us if you need top notch software development services. 🤓🚀
+This library was made by the team at [Mojo.is](https://www.mojo.is/) - Hire us if you need top notch software development services.
 
 Pull requests are welcomed and encouraged! 🙌
 
