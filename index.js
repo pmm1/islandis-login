@@ -4,8 +4,8 @@ const { validateCert } = require("./src/validateSignature.js");
 
 const IslandISLogin = function() {
     const defaults = {
-        kennitala: null,
         verifyDates: true,
+        audienceUrl: null,
     };
 
     // Create options by extending defaults with the passed in arguments
@@ -63,7 +63,12 @@ const IslandISLogin = function() {
                 const attribs =
                     json.Response.Assertion[0].AttributeStatement[0].Attribute;
 
-                const conditions = json.Response.Assertion[0].Conditions[0].$;
+                const conditions = json.Response.Assertion[0].Conditions[0];
+
+                const audienceUrl =
+                    conditions.AudienceRestriction[0].Audience[0];
+
+                const destination = json.Response.$.Destination;
 
                 const userOb = {
                     kennitala: "",
@@ -73,13 +78,14 @@ const IslandISLogin = function() {
                     userAgent: "",
                     destinationSSN: "",
                     date: {
-                        notBefore: new Date(conditions.NotBefore).getTime(),
+                        notBefore: new Date(conditions.$.NotBefore).getTime(),
                         notOnOrAfter: new Date(
-                            conditions.NotOnOrAfter
+                            conditions.$.NotOnOrAfter
                         ).getTime(),
                     },
                     authId: "",
                     authenticationMethod: "",
+                    audienceUrl: audienceUrl,
                 };
 
                 // Gather neccessary data from SAML request from island.is.
@@ -130,14 +136,22 @@ const IslandISLogin = function() {
                     }
                 }
 
-                // Check that the message is intented for the provided kennitala.
+                if (!this.options.audienceUrl) {
+                    reject({
+                        id: "AUDIENCEURL-MISSING",
+                        reason:
+                            "You must provide an 'audienceUrl' in the options when calling the constructor function.",
+                    });
+                }
+
+                // Check that the message is intented for the provided audienceUrl.
                 // This is done to protect against a malicious actor using a token
                 // intented for another service that also uses the island.is login.
-                if (userOb.destinationSSN !== this.options.kennitala) {
+                if (this.options.audienceUrl !== audienceUrl) {
                     reject({
-                        id: "COMPANY-SSN-NOT-MATCHING",
+                        id: "AUDIENCEURL-NOT-MATCHING",
                         reason:
-                            "Company kennitala provided must match data from Island.is.",
+                            "The AudienceUrl you provide must match data from Island.is.",
                     });
                     return;
                 }
@@ -163,7 +177,13 @@ const IslandISLogin = function() {
                 }
 
                 // All checks passed - Return User
-                resolve(userOb);
+                resolve({
+                    user: userOb,
+                    extra: {
+                        destination: destination,
+                        audienceUrl: audienceUrl,
+                    },
+                });
             });
         });
     };

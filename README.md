@@ -2,7 +2,7 @@
 
 Library to make life easier for you => **Handle the Island.is Login.**
 
-To get started with Island.is Identification and Authentication Services (IAS) you'll need to apply: [vefur.island.is/innskraningarthjonusta/um/](https://vefur.island.is/innskraningarthjonusta/um/)
+To get started with Island.is Identification and Authentication Services (IAS) you'll need to apply: [vefur.island.is/innskraningarthjonusta/um/](https://vefur.island.is/innskraningarthjonusta/um/).
 
 Once you've registered your company you can use this library to handle all the **boring stuff** for you.
 
@@ -18,7 +18,7 @@ This library helps with validating and verifying the SAML token and the provided
 
 ## Usage
 
-Use the constructor function to pass in the kennitala of the company you are implementing the IAS for.
+Use the constructor function to pass in the audienceUrl, the `audienceUrl` is the hostname of the server the IAS request is sent to.
 
 There is one public function provided => **`.verify()`**. Pass the token you receive from Island.is into this function and the library will make the magic happen.
 
@@ -41,7 +41,7 @@ const token =
     "[token you received to your callbackURI from Island.is login attempt]";
 
 const loginIS = new IslandISLogin({
-    kennitala: "5207170800", // should be the kennitala of a company registered with Island.is
+    audienceUrl: "api.myntkaup.is", // should be the domain you registered with Island to which the request is sent.
 });
 
 loginIS
@@ -78,7 +78,7 @@ loginIS
 
 `mobile` is not always present, it depends on if "Rafræn Skilríki" or "Íslykill" is used or not and other factors. The phonenumber is only delivered sometimes by Island.is so we can't count on it being present even if we force the user to use "Rafræn skilríki".
 
-`authenticationMethod` will be "Íslykill" if IceKey is used during login and "Rafræn Skilríki" if "Rafræn Skilríki" was used.
+`authenticationMethod` value will be _"Íslykill"_ if IceKey is used during login and _"Rafræn símaskilríki"_ if e-Authentication using SIM card (Rafræn skilríki) was used.
 
 You can force the user to use "Rafræn skilríki" by adding &qaa=4 to the login link e.g. https://innskraning.island.is/?id=advania.is&qaa=4.
 
@@ -88,7 +88,7 @@ The `authId` will persist throughout the whole process,`authId` must be a valid 
 
 You should compare the value in the `userAgent` field to the value the user has client side to make sure that the request originated from the same user.
 
-This is all covered in more detail in the implementation guide: [vefur.island.is/innskraningarthjonusta/taeknilegar-upplysingar/](https://vefur.island.is/innskraningarthjonusta/taeknilegar-upplysingar/)
+This is all covered in more detail in the implementation guide: [vefur.island.is/innskraningarthjonusta/taeknilegar-upplysingar/](https://vefur.island.is/innskraningarthjonusta/taeknilegar-upplysingar/).
 
 #### Errors
 
@@ -110,8 +110,8 @@ List of potential errors that you might encounter calling **`.verify()`**:
 
 ```json
 {
-    "id": "COMPANY-SSN-NOT-MATCHING",
-    "reason": "Company kennitala provided must match data from Island.is."
+    "id": "AUDIENCEURL-MISSING",
+    "reason": "You must provide an 'audienceUrl' in the options when calling the constructor function."
 }
 ```
 
@@ -119,6 +119,13 @@ List of potential errors that you might encounter calling **`.verify()`**:
 {
     "id": "LOGIN-REQUEST-EXPIRED",
     "reason": "Login request has expired."
+}
+```
+
+```json
+{
+    "id": "AUDIENCEURL-NOT-MATCHING",
+    "reason": "The AudienceUrl you provide must match data from Island.is."
 }
 ```
 
@@ -133,6 +140,14 @@ List of potential errors that you might encounter calling **`.verify()`**:
 This library was made by the team at [Mojo.is](https://www.mojo.is/) - You can hire us if you need top notch software development services.
 
 Pull requests are welcomed and encouraged! 🙌
+
+## Contributers
+
+The following individuals had a hand in making this library:
+
+[pmm1](https://github.com/pmm1)
+
+[atlipall](https://github.com/atlipall)
 
 ## License
 
