@@ -2,9 +2,9 @@
 
 NPM library which handles login with Electronic ID via Island.is
 
-To get started with Island.is login you'll need to apply: [https://vefur.island.is/innskraningarthjonusta/taeknilegar-upplysingar/](vefur.island.is/innskraningarthjonusta/um/)
+To get started with Island.is login you'll need to apply: (https://vefur.island.is/innskraningarthjonusta/taeknilegar-upplysingar/)[vefur.island.is/innskraningarthjonusta/um/]
 
-Here's a guide from Island.is on how to implement: [Island.is guide](https://vefur.island.is/innskraningarthjonusta/taeknilegar-upplysingar/)
+Here's a guide from Island.is on how to implement: (Island.is guide)[https://vefur.island.is/innskraningarthjonusta/taeknilegar-upplysingar/]
 
 Technical guide
 
