@@ -18,7 +18,7 @@ This library helps with validating and verifying the SAML token and the provided
 
 ## Usage
 
-Use the constructor to pass in the kennitala of the company you are implementing the IAS for.
+Use the constructor function to pass in the kennitala of the company you are implementing the IAS for.
 
 There is one public function provided --> `.verify()`. Pass the token you receive from Island.is into this function and we'll take care of the rest.
 
@@ -122,16 +122,16 @@ List of potential errors that you might encounter:
 }
 ```
 
-## Projects utilizing the library
+## Projects utilizing the library 🚀
 
 [Myntkaup.is](https://myntkaup.is/) - Myntkaup is Iceland's best way to buy and sell Bitcoin.
 
-## Made by
+## Made with ☕ & 🍺 by
 
-This library was made by the team at [Mojo.is](https://www.mojo.is/) - Hire us if you need top notch software development services.
+This library was made by the team at [Mojo.is](https://www.mojo.is/) - Hire us if you need top notch software development services. 🤓🚀
 
-Pull requests are welcomed and encouraged!
+Pull requests are welcomed and encouraged! 🙌
 
-## License
+## License ⚖️
 
 MIT
