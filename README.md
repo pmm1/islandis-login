@@ -20,7 +20,7 @@ This library helps with validating and verifying the SAML token and the provided
 
 Use the constructor function to pass in the kennitala of the company you are implementing the IAS for.
 
-There is one public function provided --> `.verify()`. Pass the token you receive from Island.is into this function and we'll take care of the rest.
+There is one public function provided ➡️ **`.verify()`**. Pass the token you receive from Island.is into this function and the library will make the magic happen.
 
 **IslandIsLogin** validates the signature according to the [technical specifications](https://vefur.island.is/innskraningarthjonusta/taeknilegar-upplysingar/) provided by the Ísland.is IAS.
 
@@ -68,7 +68,7 @@ loginIS
     "ip": "69.153.265.128",
     "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.69 (KHTML, like Gecko) Chrome/69.0.3511.69 Safari/537.69",
     "destinationSSN": "5207170800",
-    "date": { "notBefore": 1584743557574, "notOnOrAfter": 1584743887574 },
+    "date": { "notBefore": 1584743557569, "notOnOrAfter": 1584743887569 },
     "authId": "",
     "authenticationMethod": "Íslykill"
 }
@@ -92,7 +92,7 @@ This is all covered in more detail in the implementation guide: [vefur.island.is
 
 #### Errors
 
-List of potential errors that you might encounter:
+List of potential errors that you might encounter calling `.verify()`:
 
 ```json
 {
@@ -125,6 +125,8 @@ List of potential errors that you might encounter:
 ## Projects utilizing the library
 
 [Myntkaup.is](https://myntkaup.is/) - Myntkaup is Iceland's best way to buy and sell Bitcoin. 🚀
+
+Do you have a project that should be here? Just send a pull request!
 
 ## Made with ☕ + 🍺 by
 

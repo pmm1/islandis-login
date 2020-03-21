@@ -3,7 +3,6 @@ const parseString = require("xml2js").parseString;
 const { validateCert } = require("./src/validateSignature.js");
 
 const IslandISLogin = function() {
-    // Define option defaults
     const defaults = {
         kennitala: null,
         verifyDates: true,
@@ -42,10 +41,9 @@ const IslandISLogin = function() {
                     return;
                 }
 
-                const signature = json.Response.Signature[0];
-
                 const x509signature =
-                    signature.KeyInfo[0].X509Data[0].X509Certificate[0];
+                    json.Response.Signature[0].KeyInfo[0].X509Data[0]
+                        .X509Certificate[0];
 
                 // construct x509 certificate
                 const cert = `-----BEGIN CERTIFICATE-----\n${x509signature}\n-----END CERTIFICATE-----`;
@@ -61,7 +59,7 @@ const IslandISLogin = function() {
                     return;
                 }
 
-                // Array of data about user.
+                // Array of attributes about the user
                 const attribs =
                     json.Response.Assertion[0].AttributeStatement[0].Attribute;
 
