@@ -135,7 +135,8 @@ function validate(xml, cert) {
         };
     }
 
-    // Verify signature
+    // Verify that the XML file provided by the request was signed by the
+    // certificate provided.
     const checkSig = checkSignature(doc, cert, xml);
 
     if (!checkSig.isValid) {
@@ -145,7 +146,7 @@ function validate(xml, cert) {
         };
     }
 
-    // Verify that certificate we get from the Island.is request
+    // Verify that the certificate we get from the Island.is request
     // is signed and issued by Traustur Bunadur certificate.
     const isCertValid = isCertificateValid(cert);
 
