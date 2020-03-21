@@ -18,7 +18,7 @@ This library helps with validating and verifying the SAML token and the provided
 
 ## Usage
 
-Use the constructor function to pass in the audienceUrl, the `audienceUrl` is the hostname of the server the IAS request is sent to.
+Use the constructor function to pass in the `audienceUrl`. The `audienceUrl` should be the hostname of the server the IAS request is sent to.
 
 There is one public function provided => **`.verify()`**. Pass the token you receive from Island.is into this function and the library will make the magic happen.
 
@@ -41,7 +41,7 @@ const token =
     "[token you received to your callbackURI from Island.is login attempt]";
 
 const loginIS = new IslandISLogin({
-    audienceUrl: "api.vefur.is", // should be the domain you registered with Island to which the request is sent.
+    audienceUrl: "api.vefur.is", // should be the hostname of the domain you registered with Island to which the request is sent. Used for validation purposes.
 });
 
 loginIS
@@ -92,7 +92,7 @@ You can force the user to use "Rafræn skilríki" by adding &qaa=4 to the login 
 
 The `authId` will persist throughout the whole process,`authId` must be a valid GUID. This `authId` can e.g. be used to make sure that the login attempt was made by you.
 
-You should compare the value in the `userAgent` field to the value the user has client side to make sure that the request originated from the same user.
+**For maximum security you should compare the value in the `userAgent` field to the value the user has client side to make sure that the request originated from the same user.**
 
 This is all covered in more detail in the implementation guide: [vefur.island.is/innskraningarthjonusta/taeknilegar-upplysingar/](https://vefur.island.is/innskraningarthjonusta/taeknilegar-upplysingar/).
 
