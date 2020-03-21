@@ -1,0 +1,34 @@
+{
+    "name": "islandis-login",
+    "version": "1.0.0",
+    "description": "Innskráning fyrir Ísland.is",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/mojoweb/islandis-login.git"
+    },
+    "keywords": [
+        "SAML",
+        "island.is",
+        "xml"
+    ],
+    "author": "pmm1",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/mojoweb/islandis-login/issues"
+    },
+    "homepage": "https://github.com/mojoweb/islandis-login#readme",
+    "dependencies": {
+        "x509": "^0.3.4",
+        "xml-crypto": "^1.4.0",
+        "xml2js": "^0.4.23",
+        "xmldom": "^0.3.0"
+    },
+    "devDependencies": {
+        "prettier": "^1.19.1"
+    }
+}
