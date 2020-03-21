@@ -41,7 +41,7 @@ const token =
     "[token you received to your callbackURI from Island.is login attempt]";
 
 const loginIS = new IslandISLogin({
-    audienceUrl: "api.myntkaup.is", // should be the domain you registered with Island to which the request is sent.
+    audienceUrl: "api.vefur.is", // should be the domain you registered with Island to which the request is sent.
 });
 
 loginIS
@@ -62,15 +62,21 @@ loginIS
 
 ```json
 {
-    "kennitala": "2309932389",
-    "mobile": "6210193",
-    "fullname": "Patrekur Maron Magnússon",
-    "ip": "69.153.265.128",
-    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.69 (KHTML, like Gecko) Chrome/69.0.3511.69 Safari/537.69",
-    "destinationSSN": "5207170800",
-    "date": { "notBefore": 1584743557569, "notOnOrAfter": 1584743887569 },
-    "authId": "",
-    "authenticationMethod": "Íslykill"
+    "user": {
+        "kennitala": "2309932389",
+        "mobile": "6210193",
+        "fullname": "Patrekur Maron Magnússon",
+        "ip": "69.153.265.128",
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.69 (KHTML, like Gecko) Chrome/69.0.3511.69 Safari/537.69",
+        "destinationSSN": "5207170800",
+        "date": { "notBefore": 1584743557569, "notOnOrAfter": 1584743887569 },
+        "authId": "",
+        "authenticationMethod": "Íslykill"
+    },
+    "extra": {
+        "destination": "https://api.vefur.is/innskraning",
+        "audienceUrl": "api.vefur.is"
+    }
 }
 ```
 
