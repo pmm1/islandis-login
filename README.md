@@ -1,6 +1,6 @@
 # islandis-login
 
-Library to make life easier for you --> Handle the Island.is Login.
+Library to make life easier for you --> **Handle the Island.is Login.**
 
 To get started with Island.is Identification and Authentication Services (IAS) you'll need to apply: [vefur.island.is/innskraningarthjonusta/um/](https://vefur.island.is/innskraningarthjonusta/um/)
 
@@ -29,13 +29,16 @@ IslandIsLogin validates the signature according to the [technical specifications
 To install the module using npm:
 
 ```shell
-$ npm i islandis-login --save
+$ npm i --save islandis-login
 ```
+
+In Node.js:
 
 ```js
 const IslandISLogin = require("islandis-login");
 
-const token = "[token you got from Island.is login attempt]";
+const token =
+    "[token you received to your callbackURI from Island.is login attempt]";
 
 const loginIS = new IslandISLogin({
     kennitala: "5207170800", // should be the kennitala of a company registered with Island.is
