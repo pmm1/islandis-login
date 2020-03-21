@@ -2,9 +2,9 @@
     "name": "islandis-login",
     "version": "1.0.0",
     "description": "Innskráning fyrir Ísland.is",
-    "main": "app.js",
+    "main": "index.js",
     "scripts": {
-        "start": "node app.js",
+        "start": "node src/app.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {
@@ -17,7 +17,7 @@
         "xml"
     ],
     "author": "pmm1",
-    "license": "ISC",
+    "license": "MIT",
     "bugs": {
         "url": "https://github.com/mojoweb/islandis-login/issues"
     },

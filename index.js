@@ -1,6 +1,6 @@
 const parseString = require("xml2js").parseString;
 
-const { validateCert } = require("./validateSignature.js");
+const { validateCert } = require("./src/validateSignature.js");
 
 const IslandISLogin = function() {
     // Define option defaults
@@ -147,8 +147,8 @@ const IslandISLogin = function() {
                     return;
                 }
 
-                // Used to test locally with an old login request
-                // verifyDates should alway be true in Production!
+                // Used to test locally with a token that has expired.
+                // verifyDates should always be true in Production!
                 if (this.options.verifyDates) {
                     // Verify that the login request is not too old.
                     const timestamp = new Date(Date.now());
@@ -168,9 +168,7 @@ const IslandISLogin = function() {
                 }
 
                 // All checks passed - Return User
-                resolve({
-                    data: userOb,
-                });
+                resolve(userOb);
             });
         });
     };

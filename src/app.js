@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const IslandISLogin = require("./index.js");
+const IslandISLogin = require("../index.js");
 
 const loginIS = new IslandISLogin({
     kennitala: "5207170800",
@@ -9,12 +9,9 @@ const loginIS = new IslandISLogin({
 });
 
 const rawToken = fs.readFileSync(
-    path.resolve(__dirname, "./temp/token.txt"),
+    path.resolve(__dirname, "../temp/token.txt"),
     "utf8"
 );
-
-// console.log("This is rawToken: ");
-// console.log(rawToken);
 
 loginIS
     .verify(rawToken)
