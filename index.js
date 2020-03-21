@@ -148,7 +148,7 @@ const IslandISLogin = function() {
                 // verifyDates should always be true in Production!
                 if (this.options.verifyDates) {
                     // Verify that the login request is not too old.
-                    const timestamp = new Date(Date.now());
+                    const timestamp = Date.now();
 
                     if (
                         !(
