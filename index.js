@@ -37,7 +37,7 @@ const IslandISLogin = function() {
                     reject({
                         id: "INVALID-TOKEN-XML",
                         reason:
-                            "Invalid login token - cannot parse xml from Island.is.",
+                            "Invalid login token - cannot parse XML from Island.is.",
                     });
                     return;
                 }

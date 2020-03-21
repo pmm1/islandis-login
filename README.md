@@ -27,6 +27,8 @@ IslandIsLogin validates the signature according to the [technical specifications
 ```js
 const IslandISLogin = require("islandis-login");
 
+const token = "[token you got from Island.is login attempt]";
+
 const loginIS = new IslandISLogin({
     kennitala: "5207170800", // should be the kennitala of a company registered with Island.is
 });
@@ -45,7 +47,7 @@ loginIS
     });
 ```
 
-**This is what the user object looks like:**
+#### This is what the user object looks like:
 
 ```json
 {
@@ -77,13 +79,45 @@ You should compare the value in the `userAgent` field to the value the user has 
 
 This is all covered in more detail the implementation guide: [vefur.island.is/innskraningarthjonusta/taeknilegar-upplysingar/](https://vefur.island.is/innskraningarthjonusta/taeknilegar-upplysingar/)
 
+#### Errors
+
+List of potential errors that you might encounter:
+
+```json
+{
+    "id": "INVALID-TOKEN-XML",
+    "reason": "Invalid login token - cannot parse XML from Island.is."
+}
+```
+
+```json
+{
+    "id": "CERTIFICATE-INVALID",
+    "reason": "[Certificate-Error-Object]"
+}
+```
+
+```json
+{
+    "id": "COMPANY-SSN-NOT-MATCHING",
+    "reason": "Company kennitala provided must match data from Island.is."
+}
+```
+
+```json
+{
+    "id": "LOGIN-REQUEST-EXPIRED",
+    "reason": "Login request has expired."
+}
+```
+
 ## Projects utilizing the library
 
-[Myntkaup.is](https://myntkaup.is/) - Myntkaup is Iceland's best way to buy and sell Bitcoin
+[Myntkaup.is](https://myntkaup.is/) - Myntkaup is Iceland's best way to buy and sell Bitcoin.
 
 ## Made by
 
-This library was made by the team at [Mojo.is](https://www.mojo.is/)
+This library was made by the team at [Mojo.is](https://www.mojo.is/) - Hire us if you need top notch software development services.
 
 Pull requests are welcomed and encouraged!
 
