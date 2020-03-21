@@ -22,7 +22,7 @@ Use the constructor function to pass in the kennitala of the company you are imp
 
 There is one public function provided --> `.verify()`. Pass the token you receive from Island.is into this function and we'll take care of the rest.
 
-IslandIsLogin validates the signature according to the [technical specifications](https://vefur.island.is/innskraningarthjonusta/taeknilegar-upplysingar/) provided by the Ísland.is IAS.
+**IslandIsLogin** validates the signature according to the [technical specifications](https://vefur.island.is/innskraningarthjonusta/taeknilegar-upplysingar/) provided by the Ísland.is IAS.
 
 ### Example usage
 
@@ -65,8 +65,8 @@ loginIS
     "kennitala": "2309932389",
     "mobile": "6210193",
     "fullname": "Patrekur Maron Magnússon",
-    "ip": "87.153.265.128",
-    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3687.132 Safari/537.36",
+    "ip": "69.153.265.128",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.69 (KHTML, like Gecko) Chrome/69.0.3511.69 Safari/537.69",
     "destinationSSN": "5207170800",
     "date": { "notBefore": 1584743557574, "notOnOrAfter": 1584743887574 },
     "authId": "",
@@ -76,7 +76,7 @@ loginIS
 
 **A note on the fields provided:**
 
-`mobile` is not always present, it depends on if "Rafræn Skilríki" or "Íslykill" is used or not and other factors. The phonenumber is only sometimes delivered by Island.is so we can't count on it being present even if we force the user to use "Rafræn skilríki".
+`mobile` is not always present, it depends on if "Rafræn Skilríki" or "Íslykill" is used or not and other factors. The phonenumber is only delivered sometimes by Island.is so we can't count on it being present even if we force the user to use "Rafræn skilríki".
 
 `authenticationMethod` will be "Íslykill" if IceKey is used during login and "Rafræn Skilríki" if "Rafræn Skilríki" were used.
 
@@ -88,7 +88,7 @@ The `authId` will persist through the whole process,`authId` must be a valid GUI
 
 You should compare the value in the `userAgent` field to the value the user has client side to make sure that the request originated from the same user.
 
-This is all covered in more detail the implementation guide: [vefur.island.is/innskraningarthjonusta/taeknilegar-upplysingar/](https://vefur.island.is/innskraningarthjonusta/taeknilegar-upplysingar/)
+This is all covered in more detail in the implementation guide: [vefur.island.is/innskraningarthjonusta/taeknilegar-upplysingar/](https://vefur.island.is/innskraningarthjonusta/taeknilegar-upplysingar/)
 
 #### Errors
 
@@ -128,7 +128,7 @@ List of potential errors that you might encounter:
 
 ## Made with ☕ + 🍺 by
 
-This library was made by the team at [Mojo.is](https://www.mojo.is/) - Hire us if you need top notch software development services.
+This library was made by the team at [Mojo.is](https://www.mojo.is/) - You can hire us if you need top notch software development services.
 
 Pull requests are welcomed and encouraged! 🙌
 
