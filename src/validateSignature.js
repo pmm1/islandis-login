@@ -1,12 +1,13 @@
-const select = require("xml-crypto").xpath;
-const dom = require("xmldom").DOMParser;
-const SignedXml = require("xml-crypto").SignedXml;
 const x509 = require("x509");
+const path = require("path");
+const { xpath } = require("xml-crypto");
+const { DOMParser } = require("xmldom");
+const { SignedXml } = require("xml-crypto");
 const { Certificate } = require("@fidm/x509");
 const { readFileSync } = require("fs");
-const path = require("path");
 
 /**
+ *
  * A key info provider implementation
  *
  */
@@ -34,11 +35,10 @@ function checkCert(certString) {
         return false;
     }
 
-    if (cert.subject.serialNumber !== "6503760649") {
-        return false;
-    }
-
-    if (cert.issuer.organizationName !== "Audkenni ehf.") {
+    if (
+        cert.subject.serialNumber !== "6503760649" ||
+        cert.issuer.organizationName !== "Audkenni ehf."
+    ) {
         return false;
     }
 
@@ -57,7 +57,7 @@ function checkCert(certString) {
 }
 
 function checkSignature(doc, cert, xml) {
-    const signature = select(
+    const signature = xpath(
         doc,
         "/*/*[local-name(.)='Signature' and namespace-uri(.)='http://www.w3.org/2000/09/xmldsig#']"
     )[0];
@@ -74,7 +74,7 @@ function checkSignature(doc, cert, xml) {
 }
 
 function isCertificateValid(certificate) {
-    const c = Certificate.fromPEM(new Buffer.from(certToPEM(certificate)));
+    const c = Certificate.fromPEM(new Buffer.from(certificate));
 
     const certs = Certificate.fromPEMs(
         readFileSync(path.resolve(__dirname, "../cert/Oll_kedjan.pem"))
@@ -100,30 +100,20 @@ function isCertificateValid(certificate) {
 }
 
 function certToPEM(cert) {
-    if (cert == null) {
-        return "";
-    } else if (
-        cert.indexOf("BEGIN CERTIFICATE") === -1 &&
-        cert.indexOf("END CERTIFICATE") === -1
-    ) {
-        cert = "-----BEGIN CERTIFICATE-----\n" + cert;
-        cert = cert + "\n-----END CERTIFICATE-----\n";
-        return cert;
-    } else {
-        return cert;
-    }
+    return `-----BEGIN CERTIFICATE-----\n${cert}\n-----END CERTIFICATE-----`;
 }
 
 /*
 
     Validates x509 certificate validity, checks certificate 
-    and validates digital signature of xml
-
-    returns Boolean - true if cert is valid false otherwise.
+    and validates digital signature of XML.
 
 */
-function validate(xml, cert) {
-    const doc = new dom().parseFromString(xml);
+function validate(xml, signature) {
+    const doc = new DOMParser().parseFromString(xml);
+
+    // construct x509 certificate
+    const cert = certToPEM(signature);
 
     // Verify certificate data, i.e.
     // serialNumber & organization name is Auðkenni etc.

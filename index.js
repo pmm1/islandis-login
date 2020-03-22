@@ -1,5 +1,4 @@
-const parseString = require("xml2js").parseString;
-
+const { parseString } = require("xml2js");
 const { validateCert } = require("./src/validateSignature.js");
 
 const IslandISLogin = function() {
@@ -33,30 +32,25 @@ const IslandISLogin = function() {
             // parse XML
             parseString(xml, (err, json) => {
                 if (err) {
-                    reject({
+                    return reject({
                         id: "INVALID-TOKEN-XML",
                         reason:
                             "Invalid login token - cannot parse XML from Island.is.",
                     });
-                    return;
                 }
 
                 const x509signature =
                     json.Response.Signature[0].KeyInfo[0].X509Data[0]
                         .X509Certificate[0];
 
-                // construct x509 certificate
-                const cert = `-----BEGIN CERTIFICATE-----\n${x509signature}\n-----END CERTIFICATE-----`;
-
                 // validate signature of document.
-                const { isValid, certErr } = validateCert(xml, cert);
+                const { isValid, certErr } = validateCert(xml, x509signature);
 
                 if (!isValid) {
-                    reject({
+                    return reject({
                         id: "CERTIFICATE-INVALID",
                         reason: certErr,
                     });
-                    return;
                 }
 
                 // Array of attributes about the user
@@ -90,54 +84,54 @@ const IslandISLogin = function() {
 
                 // Gather neccessary data from SAML request from island.is.
                 for (let i = 0; i < attribs.length; i++) {
-                    const temp = attribs[i];
+                    const item = attribs[i];
 
-                    if (temp.$.Name === "UserSSN") {
-                        userOb.kennitala = temp.AttributeValue[0]._;
+                    if (item.$.Name === "UserSSN") {
+                        userOb.kennitala = item.AttributeValue[0]._;
                         continue;
                     }
 
-                    if (temp.$.Name === "Mobile") {
-                        userOb.mobile = temp.AttributeValue[0]._.replace(
+                    if (item.$.Name === "Mobile") {
+                        userOb.mobile = item.AttributeValue[0]._.replace(
                             "-",
                             ""
                         );
                         continue;
                     }
 
-                    if (temp.$.Name === "Name") {
-                        userOb.fullname = temp.AttributeValue[0]._;
+                    if (item.$.Name === "Name") {
+                        userOb.fullname = item.AttributeValue[0]._;
                         continue;
                     }
 
-                    if (temp.$.Name === "IPAddress") {
-                        userOb.ip = temp.AttributeValue[0]._;
+                    if (item.$.Name === "IPAddress") {
+                        userOb.ip = item.AttributeValue[0]._;
                         continue;
                     }
 
-                    if (temp.$.Name === "UserAgent") {
-                        userOb.userAgent = temp.AttributeValue[0]._;
+                    if (item.$.Name === "UserAgent") {
+                        userOb.userAgent = item.AttributeValue[0]._;
                         continue;
                     }
 
-                    if (temp.$.Name === "AuthID") {
-                        userOb.authId = temp.AttributeValue[0]._;
+                    if (item.$.Name === "AuthID") {
+                        userOb.authId = item.AttributeValue[0]._;
                         continue;
                     }
 
-                    if (temp.$.Name === "Authentication") {
-                        userOb.authenticationMethod = temp.AttributeValue[0]._;
+                    if (item.$.Name === "Authentication") {
+                        userOb.authenticationMethod = item.AttributeValue[0]._;
                         continue;
                     }
 
-                    if (temp.$.Name === "DestinationSSN") {
-                        userOb.destinationSSN = temp.AttributeValue[0]._;
+                    if (item.$.Name === "DestinationSSN") {
+                        userOb.destinationSSN = item.AttributeValue[0]._;
                         continue;
                     }
                 }
 
                 if (!this.options.audienceUrl) {
-                    reject({
+                    return reject({
                         id: "AUDIENCEURL-MISSING",
                         reason:
                             "You must provide an 'audienceUrl' in the options when calling the constructor function.",
@@ -148,12 +142,11 @@ const IslandISLogin = function() {
                 // This is done to protect against a malicious actor using a token
                 // intented for another service that also uses the island.is login.
                 if (this.options.audienceUrl !== audienceUrl) {
-                    reject({
+                    return reject({
                         id: "AUDIENCEURL-NOT-MATCHING",
                         reason:
                             "The AudienceUrl you provide must match data from Island.is.",
                     });
-                    return;
                 }
 
                 // Used to test locally with a token that has expired.
@@ -168,11 +161,10 @@ const IslandISLogin = function() {
                             timestamp > userOb.date.notBefore
                         )
                     ) {
-                        reject({
+                        return reject({
                             id: "LOGIN-REQUEST-EXPIRED",
                             reason: "Login request has expired.",
                         });
-                        return;
                     }
                 }
 
