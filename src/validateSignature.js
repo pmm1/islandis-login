@@ -26,7 +26,7 @@ function FileKeyInfo(key) {
     };
 }
 
-function checkCert(certString) {
+function isCertValid(certString) {
     let cert;
 
     try {
@@ -47,9 +47,9 @@ function checkCert(certString) {
         notAfter: new Date(cert.notAfter).getTime(),
     };
 
-    const currentTime = Date.now();
+    const timestamp = Date.now();
 
-    if (!(currentTime > dates.notBefore && currentTime < dates.notAfter)) {
+    if (!(timestamp > dates.notBefore && timestamp < dates.notAfter)) {
         return false;
     }
 
@@ -65,25 +65,18 @@ function checkSignature(doc, cert, xml) {
     const sig = new SignedXml();
     sig.keyInfoProvider = new FileKeyInfo(cert);
     sig.loadSignature(signature);
-    const res = sig.checkSignature(xml);
+    const isValid = sig.checkSignature(xml);
 
-    return {
-        isValid: res,
-        certErr: sig.validationErrors,
-    };
+    return isValid;
 }
 
 function isCertificateValid(certificate) {
     const c = Certificate.fromPEM(new Buffer.from(certificate));
 
-    const certs = Certificate.fromPEMs(
-        readFileSync(path.resolve(__dirname, "../cert/Oll_kedjan.pem"))
-    );
-
     // Reference: https://www.audkenni.is/adstod/skilriki-kortum/skilrikjakedjur/
-    const AudkennisRot = certs[0];
-    const TraustAudkenni = certs[1];
-    const TrausturBunadur = certs[2];
+    const TrausturBunadur = Certificate.fromPEM(
+        readFileSync(path.resolve(__dirname, "../cert/TrausturBunadur.pem"))
+    );
 
     // we only need to verify TrausturBunadur cert because that is the cert used
     // to sign the message from Island.is
@@ -110,46 +103,34 @@ function certToPEM(cert) {
 
 */
 function validate(xml, signature) {
-    const doc = new DOMParser().parseFromString(xml);
+    return new Promise((resolve, reject) => {
+        const doc = new DOMParser().parseFromString(xml);
 
-    // construct x509 certificate
-    const cert = certToPEM(signature);
+        // construct x509 certificate
+        const cert = certToPEM(signature);
 
-    // Verify certificate data, i.e.
-    // serialNumber & organization name is Auðkenni etc.
-    const validCertData = checkCert(cert);
+        // Verify certificate data, i.e.
+        // serialNumber & organization name is Auðkenni etc.
+        if (!isCertValid(cert)) {
+            return reject("XML message is not signed by Auðkenni.");
+        }
 
-    if (!validCertData) {
-        return {
-            isValid: false,
-        };
-    }
+        // Verify that the XML document provided by the request was signed by the
+        // certificate provided with the request.
+        if (!checkSignature(doc, cert, xml)) {
+            return reject("XML signature is invalid.");
+        }
 
-    // Verify that the XML file provided by the request was signed by the
-    // certificate provided.
-    const checkSig = checkSignature(doc, cert, xml);
+        // Verify that the certificate we get from the Island.is request
+        // is signed and issued by Traustur Bunadur certificate.
+        if (!isCertificateValid(cert)) {
+            return reject(
+                "The XML document is not signed by Þjóðskrá Íslands."
+            );
+        }
 
-    if (!checkSig.isValid) {
-        return {
-            isValid: checkSig.isValid,
-            certErr: checkSig.certErr,
-        };
-    }
-
-    // Verify that the certificate we get from the Island.is request
-    // is signed and issued by Traustur Bunadur certificate.
-    const isCertValid = isCertificateValid(cert);
-
-    if (!isCertValid) {
-        return {
-            isValid: false,
-            certErr: null,
-        };
-    }
-
-    return {
-        isValid: true,
-    };
+        return resolve();
+    });
 }
 
 module.exports = {

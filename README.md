@@ -69,20 +69,20 @@ loginIS
         "ip": "69.153.265.128",
         "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.69 (KHTML, like Gecko) Chrome/69.0.3511.69 Safari/537.69",
         "destinationSSN": "5207170800",
-        "date": { "notBefore": 1584743557569, "notOnOrAfter": 1584743887569 },
         "authId": "",
         "authenticationMethod": "Íslykill"
     },
     "extra": {
         "destination": "https://api.vefur.is/innskraning",
-        "audienceUrl": "api.vefur.is"
+        "audienceUrl": "api.vefur.is",
+        "dates": { "notBefore": 1584812651351, "notOnOrAfter": 1584812981351 }
     }
 }
 ```
 
 **A note on the fields provided:**
 
-`mobile` is not always present, it depends on if "Rafræn Skilríki" or "Íslykill" is used or not and other factors. The phonenumber is only delivered sometimes by Island.is so we can't count on it being present even if we force the user to use "Rafræn skilríki".
+The `mobile` value is not always present, it depends on if "Rafræn Skilríki" or "Íslykill" is used or not and other factors. The phonenumber is only delivered sometimes by Island.is so we can't count on it being present even if we force the user to use "Rafræn skilríki".
 
 `authenticationMethod` value will be _"Íslykill"_ if IceKey is used during login and _"Rafræn símaskilríki"_ if e-Authentication using SIM card (Rafræn skilríki) was used.
 
