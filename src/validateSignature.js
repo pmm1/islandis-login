@@ -1,4 +1,3 @@
-const x509 = require("x509");
 const path = require("path");
 const { xpath } = require("xml-crypto");
 const { DOMParser } = require("xmldom");
@@ -26,44 +25,35 @@ function FileKeyInfo(key) {
     };
 }
 
-function isCertValid(certString) {
-    let cert;
+function isCertificateDataValid(cert) {
+    const { serialName } = cert.subject;
+    const { organizationName } = cert.issuer;
+    const { validFrom, validTo } = cert;
 
-    try {
-        cert = x509.parseCert(certString);
-    } catch (e) {
+    if (serialName !== "6503760649" || organizationName !== "Audkenni ehf.") {
         return false;
     }
-
-    if (
-        cert.subject.serialNumber !== "6503760649" ||
-        cert.issuer.organizationName !== "Audkenni ehf."
-    ) {
-        return false;
-    }
-
-    const dates = {
-        notBefore: new Date(cert.notBefore).getTime(),
-        notAfter: new Date(cert.notAfter).getTime(),
-    };
 
     const timestamp = Date.now();
 
-    if (!(timestamp > dates.notBefore && timestamp < dates.notAfter)) {
+    if (
+        timestamp < new Date(validFrom).getTime() ||
+        timestamp > new Date(validTo).getTime()
+    ) {
         return false;
     }
 
     return true;
 }
 
-function checkSignature(doc, cert, xml) {
+function checkSignature(doc, pem, xml) {
     const signature = xpath(
         doc,
         "/*/*[local-name(.)='Signature' and namespace-uri(.)='http://www.w3.org/2000/09/xmldsig#']"
     )[0];
 
     const sig = new SignedXml();
-    sig.keyInfoProvider = new FileKeyInfo(cert);
+    sig.keyInfoProvider = new FileKeyInfo(pem);
     sig.loadSignature(signature);
     const isValid = sig.checkSignature(xml);
 
@@ -71,8 +61,6 @@ function checkSignature(doc, cert, xml) {
 }
 
 function isCertificateValid(certificate) {
-    const c = Certificate.fromPEM(new Buffer.from(certificate));
-
     // Reference: https://www.audkenni.is/adstod/skilriki-kortum/skilrikjakedjur/
     const TrausturBunadur = Certificate.fromPEM(
         readFileSync(path.resolve(__dirname, "../cert/TrausturBunadur.pem"))
@@ -82,9 +70,9 @@ function isCertificateValid(certificate) {
     // to sign the message from Island.is
     if (
         TrausturBunadur.verifySubjectKeyIdentifier() &&
-        c.verifySubjectKeyIdentifier() &&
-        TrausturBunadur.checkSignature(c) === null &&
-        c.isIssuer(TrausturBunadur)
+        certificate.verifySubjectKeyIdentifier() &&
+        TrausturBunadur.checkSignature(certificate) === null &&
+        certificate.isIssuer(TrausturBunadur)
     ) {
         return true;
     }
@@ -107,17 +95,18 @@ function validate(xml, signature) {
         const doc = new DOMParser().parseFromString(xml);
 
         // construct x509 certificate
-        const cert = certToPEM(signature);
+        const pem = certToPEM(signature);
+        const cert = Certificate.fromPEM(new Buffer.from(pem));
 
         // Verify certificate data, i.e.
         // serialNumber & organization name is Auðkenni etc.
-        if (!isCertValid(cert)) {
+        if (!isCertificateDataValid(cert)) {
             return reject("XML message is not signed by Auðkenni.");
         }
 
         // Verify that the XML document provided by the request was signed by the
         // certificate provided with the request.
-        if (!checkSignature(doc, cert, xml)) {
+        if (!checkSignature(doc, pem, xml)) {
             return reject("XML signature is invalid.");
         }
 
