@@ -155,6 +155,8 @@ The following individuals had a hand in making this library:
 
 [atlipall](https://github.com/atlipall)
 
+[sebastienne](https://github.com/sebastienne)
+
 ## License
 
 MIT
