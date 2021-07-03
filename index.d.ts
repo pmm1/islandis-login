@@ -1,4 +1,4 @@
-declare module 'islandis-login' {
+declare module '@island.is/login' {
   export type ErrorId =
     | 'INVALID-TOKEN-XML'
     | 'CERTIFICATE-INVALID'
