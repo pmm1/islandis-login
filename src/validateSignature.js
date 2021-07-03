@@ -30,7 +30,7 @@ function isCertificateDataValid(cert) {
     const { organizationName } = cert.issuer;
     const { validFrom, validTo } = cert;
 
-    if (serialName !== "6503760649" || organizationName !== "Audkenni ehf.") {
+    if (serialName !== "6503760649" || organizationName !== "Audkenni hf.") {
         return false;
     }
 
@@ -62,17 +62,17 @@ function checkSignature(doc, pem, xml) {
 
 function isCertificateValid(certificate) {
     // Reference: https://www.audkenni.is/adstod/skilriki-kortum/skilrikjakedjur/
-    const TrausturBunadur = Certificate.fromPEM(
-        readFileSync(path.resolve(__dirname, "../cert/TrausturBunadur.pem"))
+    const certFromPem = Certificate.fromPEM(
+        readFileSync(path.resolve(__dirname, "../cert/FullgiltAudkenni.pem"))
     );
 
-    // we only need to verify TrausturBunadur cert because that is the cert used
+    // we only need to verify the authority cert because that is the cert used
     // to sign the message from Island.is
     if (
-        TrausturBunadur.verifySubjectKeyIdentifier() &&
+        certFromPem.verifySubjectKeyIdentifier() &&
         certificate.verifySubjectKeyIdentifier() &&
-        TrausturBunadur.checkSignature(certificate) === null &&
-        certificate.isIssuer(TrausturBunadur)
+        certFromPem.checkSignature(certificate) === null &&
+        certificate.isIssuer(certFromPem)
     ) {
         return true;
     }
