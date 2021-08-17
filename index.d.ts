@@ -39,12 +39,12 @@ declare module 'islandis-login' {
 
   class IslandisLogin {
     constructor({
-      verifyDates = true,
-      audienceUrl = null
+      verifyDates,
+      audienceUrl
     }: {
       verifyDates?: boolean;
       audienceUrl: string | null;
-    }) { }
+    })
 
     verify(token: string): Promise<VerifyResult>;
   }
