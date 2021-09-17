@@ -44,6 +44,7 @@ declare module 'islandis-login' {
     }: {
       verifyDates?: boolean;
       audienceUrl: string | null;
+      certificatePath?: string;
     })
 
     verify(token: string): Promise<VerifyResult>;

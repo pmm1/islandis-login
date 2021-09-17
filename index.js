@@ -1,10 +1,12 @@
 const { parseStringPromise } = require("xml2js");
 const { validateCert } = require("./src/validateSignature.js");
+const path = require("path");
 
 const IslandISLogin = function() {
     const defaults = {
         verifyDates: true,
         audienceUrl: null,
+        certificatePath: undefined,
     };
 
     // Create options by extending defaults with the passed in arguments
@@ -28,7 +30,8 @@ const IslandISLogin = function() {
                     // Validate signature of XML document from Island.is, verify that the
                     // XML document was signed by Island.is and verify certificate issuer.
                     try {
-                        await validateCert(xml, x509signature);
+                        const certPath = this.options.certificatePath || path.resolve(__dirname, "./cert/FullgiltAudkenni.pem");
+                        await validateCert(xml, x509signature, certPath);
                     } catch (e) {
                         return reject({
                             id: "CERTIFICATE-INVALID",
