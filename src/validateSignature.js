@@ -1,6 +1,6 @@
 const path = require("path");
 const { xpath } = require("xml-crypto");
-const { DOMParser } = require("xmldom");
+const { DOMParser } = require("@xmldom/xmldom");
 const { SignedXml } = require("xml-crypto");
 const { Certificate } = require("@fidm/x509");
 const { readFileSync } = require("fs");
@@ -62,9 +62,7 @@ function checkSignature(doc, pem, xml) {
 
 function isCertificateValid(certificate, certPath) {
     // Reference: https://www.audkenni.is/adstod/skilriki-kortum/skilrikjakedjur/
-    const certFromPem = Certificate.fromPEM(
-        readFileSync(certPath)
-    );
+    const certFromPem = Certificate.fromPEM(readFileSync(certPath));
 
     // we only need to verify the authority cert because that is the cert used
     // to sign the message from Island.is

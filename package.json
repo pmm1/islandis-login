@@ -28,9 +28,9 @@
     "homepage": "https://github.com/mojoweb/islandis-login#readme",
     "dependencies": {
         "@fidm/x509": "^1.2.1",
+        "@xmldom/xmldom": "^0.7.5",
         "xml-crypto": "^2.0.0",
-        "xml2js": "^0.4.23",
-        "xmldom": "^0.3.0"
+        "xml2js": "^0.4.23"
     },
     "devDependencies": {
         "prettier": "^1.19.1"
