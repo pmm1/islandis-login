@@ -1,14 +1,3 @@
-# Note on fork:
-
-This repository is a fork off of islandis-login. It's purpose is to address the issue with validation of
-certificates, see: https://github.com/mojoweb/islandis-login/pull/6 and https://island.is/rof-innskraning/leidbeiningar-fyrir-taeknifolk
-
-To use this package, rather than the original, please replace your usage of islandis-login with `@island.is/login`
-
-```sh
-yarn add @island.is/login
-```
-
 # islandis-login
 
 Library to make life easier for you => **Handle the Island.is Login.**
