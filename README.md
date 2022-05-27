@@ -1,7 +1,7 @@
 # Note on fork:
 
 This repository is a fork off of islandis-login. It's purpose is to address the issue with validation of
-certificates, see: https://github.com/mojoweb/islandis-login/pull/6 and https://island.is/rof-innskraning/leidbeiningar-fyrir-taeknifolk
+certificates, see: https://github.com/mojoweb/islandis-login/pull/6.
 
 To use this package, rather than the original, please replace your usage of islandis-login with `@island.is/login`
 
@@ -13,7 +13,7 @@ yarn add @island.is/login
 
 Library to make life easier for you => **Handle the Island.is Login.**
 
-To get started with Island.is Identification and Authentication Services (IAS) you'll need to apply: [vefur.island.is/innskraningarthjonusta/um/](https://vefur.island.is/innskraningarthjonusta/um/).
+To get started with Island.is Identification and Authentication Services (IAS) you'll need to apply: [https://island.is/innskraningarthjonusta](https://island.is/innskraningarthjonusta).
 
 Once you've registered your company you can use this library to handle all the **boring stuff** for you.
 
@@ -33,7 +33,7 @@ Use the constructor function to pass in the `audienceUrl`. The `audienceUrl` sho
 
 There is one public function provided => **`.verify()`**. Pass the token you receive from Island.is into this function and the library will make the magic happen.
 
-**IslandIsLogin** validates the signature according to the [technical specifications](https://vefur.island.is/innskraningarthjonusta/taeknilegar-upplysingar/) provided by the Ísland.is IAS.
+**IslandIsLogin** validates the signature according to the [technical specifications](https://island.is/innskraningarthjonusta/taeknilegar-upplysingar-taeknimenn) provided by the Ísland.is IAS.
 
 ### Example usage
 
@@ -105,7 +105,7 @@ The `authId` will persist throughout the whole process,`authId` must be a valid 
 
 **For maximum security you should compare the value in the `userAgent` field to the value the user has client side to make sure that the request originated from the same user.**
 
-This is all covered in more detail in the implementation guide: [vefur.island.is/innskraningarthjonusta/taeknilegar-upplysingar/](https://vefur.island.is/innskraningarthjonusta/taeknilegar-upplysingar/).
+This is all covered in more detail in the implementation guide: [https://island.is/innskraningarthjonusta/taeknilegar-upplysingar-taeknimenn](https://island.is/innskraningarthjonusta/taeknilegar-upplysingar-taeknimenn).
 
 #### Errors
 
