@@ -18,6 +18,7 @@ This library helps with validating and verifying the SAML token and the provided
 
 ### A note on the development of the new version of the IAS
 
+_June 10th, 2022:_
 A new authentication service is being developed by Island.is and is currently in use but as of now it's only available to government agencies. This library handles the IAS by the older version which is still in use and the only one available to private parties. Read more here: [https://island.is/en/authentication-system](https://island.is/en/authentication-system).
 
 I contacted Island.is and asked them when they'll make the new service available to private parties. They replied that it's uncertain if it will ever be available to private parties. **Hopefully they'll make it available to private parties eventually in light of the fact that the Island.is organization and the development of the aforementioned authentication services is funded entirely by taxpayer money.**
@@ -26,7 +27,7 @@ I contacted Island.is and asked them when they'll make the new service available
 
 Use the constructor function to pass in the `audienceUrl`. The `audienceUrl` should be the hostname of the server the IAS request is sent to. Note that the `audienceUrl` field is required.
 
-#### Optional params
+##### Optional params
 
 There is one public function provided => **`.verify()`**. Pass the token you receive from Island.is into this function and the library will make the magic happen.
 
@@ -52,10 +53,10 @@ const loginIS = new IslandISLogin({
     audienceUrl: "api.vefur.is", // required parameter
     // should be the hostname of the domain you registered with Island to which the request is sent. Used for validation purposes.
 
-    certificatePath: "path-to-certificate" // Optional parameter
+    certificatePath: "path-to-certificate", // Optional parameter
     // if this field is provided the library will use the provided certificate instead of the certificate provided with the library (see /cert directory). Useful because Island.is renews the certificate regularly and you will need to take care of certificate expiration.
 
-    verifyDates: true // Optional parameter, defaults to true:
+    verifyDates: true, // Optional parameter, defaults to true:
     // The login tokens expire in a few minutes. Setting this parameter to false will disable the expiration verification of the token. Useful in a testing environment to test valid tokens that have expired.
     // IMPORTANT: Should only be false while testing, this should never be false in production!
 });
