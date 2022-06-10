@@ -113,7 +113,7 @@ The `authId` will persist throughout the whole process,`authId` must be a valid 
 
 **For maximum security you should compare the value in the `userAgent` field to the value the user has client side to make sure that the request originated from the same user.**
 
-This is all covered in more detail in the implementation guide: [https://island.is/innskraningarthjonusta/taeknilegar-upplysingar-taeknimenn]([https://island.is/innskraningarthjonusta/taeknilegar-upplysingar-taeknimenn).
+This is all covered in more detail in the implementation guide: [https://island.is/innskraningarthjonusta/taeknilegar-upplysingar-taeknimenn](https://island.is/innskraningarthjonusta/taeknilegar-upplysingar-taeknimenn).
 
 #### Errors
 
