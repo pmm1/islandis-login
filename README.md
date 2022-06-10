@@ -29,7 +29,7 @@ Use the constructor function to pass in the `audienceUrl`. The `audienceUrl` sho
 
 ##### Optional params
 
-There are two optional constructor parameters: `certificatePath`: String & `verifyDates`: Boolean. Refer to the example below to
+There are two optional parameters: `certificatePath` & `verifyDates`. Refer to the example below for more information.
 
 There is one public function provided => **`.verify()`**. Pass the token you receive from Island.is into this function and the library will make the magic happen.
 
