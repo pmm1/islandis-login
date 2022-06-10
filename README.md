@@ -29,6 +29,8 @@ Use the constructor function to pass in the `audienceUrl`. The `audienceUrl` sho
 
 ##### Optional params
 
+There are two optional constructor parameters: `certificatePath`: String & `verifyDates`: Boolean. Refer to the example below to
+
 There is one public function provided => **`.verify()`**. Pass the token you receive from Island.is into this function and the library will make the magic happen.
 
 **IslandIsLogin** validates the signature according to the [technical specifications](https://island.is/innskraningarthjonusta/taeknilegar-upplysingar-taeknimenn) provided by the Ísland.is IAS.
@@ -54,9 +56,9 @@ const loginIS = new IslandISLogin({
     // should be the hostname of the domain you registered with Island to which the request is sent. Used for validation purposes.
 
     certificatePath: "path-to-certificate", // Optional parameter
-    // if this field is provided the library will use the provided certificate instead of the certificate provided with the library (see /cert directory). Useful because Island.is renews the certificate regularly and you will need to take care of certificate expiration.
+    // if this field is provided the library will use the provided certificate instead of the certificate provided with the library (see /cert directory). Useful because Island.is renews the certificate regularly and you will need to take care of this certificate expiration.
 
-    verifyDates: true, // Optional parameter, defaults to true:
+    verifyDates: true, // Optional parameter, defaults to true
     // The login tokens expire in a few minutes. Setting this parameter to false will disable the expiration verification of the token. Useful in a testing environment to test valid tokens that have expired.
     // IMPORTANT: Should only be false while testing, this should never be false in production!
 });
