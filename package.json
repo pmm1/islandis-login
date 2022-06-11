@@ -1,6 +1,6 @@
 {
     "name": "islandis-login",
-    "version": "1.4.1",
+    "version": "1.4.2",
     "description": "Island.is Identification and Authentication Services (Login) for Node.js",
     "main": "index.js",
     "types": "index.d.ts",
@@ -9,7 +9,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/island-is/islandis-login"
+        "url": "git+https://github.com/pmm1/islandis-login"
     },
     "keywords": [
         "SAML",
@@ -23,9 +23,9 @@
     "author": "pmm1",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/mojoweb/islandis-login/issues"
+        "url": "https://github.com/pmm1/islandis-login/issues"
     },
-    "homepage": "https://github.com/mojoweb/islandis-login#readme",
+    "homepage": "https://github.com/pmm1/islandis-login#readme",
     "dependencies": {
         "@fidm/x509": "^1.2.1",
         "@xmldom/xmldom": "^0.8.2",
