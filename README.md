@@ -1,5 +1,11 @@
 # islandis-login
 
+### IMPORTANT --> On June 14th 2022 at around 08:00 AM GMT a new certificate will be issued by Island.is
+
+For this library to keep working after the certificate update, make sure _that you update to version 1.4.0 or higher._ Version 1.4.0 will automatically switch to the new certificate at 08:00 AM GMT, until then the library utilizes the old certificate.
+
+---
+
 Library to make life easier for you => **Handle the Island.is Login.**
 
 To get started with Island.is Identification and Authentication Services (IAS) you'll need to apply: [https://island.is/innskraningarthjonusta](https://island.is/innskraningarthjonusta).

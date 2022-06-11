@@ -1,4 +1,3 @@
-const path = require("path");
 const { xpath } = require("xml-crypto");
 const { DOMParser } = require("@xmldom/xmldom");
 const { SignedXml } = require("xml-crypto");
@@ -109,7 +108,7 @@ function validate(xml, signature, certPath) {
         }
 
         // Verify that the certificate we get from the Island.is request
-        // is signed and issued by Traustur Bunadur certificate.
+        // is signed and issued by the certificate provided via 'certPath'.
         if (!isCertificateValid(cert, certPath)) {
             return reject(
                 "The XML document is not signed by Þjóðskrá Íslands."
