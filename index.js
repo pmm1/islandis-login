@@ -32,7 +32,10 @@ const IslandISLogin = function() {
                     try {
                         const certPath =
                             this.options.certificatePath ||
-                            path.resolve(__dirname, getActiveCertPath());
+                            path.resolve(
+                                __dirname,
+                                "./cert/FullgiltAudkenni.pem"
+                            );
                         await validateCert(xml, x509signature, certPath);
                     } catch (e) {
                         return reject({
@@ -179,19 +182,6 @@ const IslandISLogin = function() {
         }
 
         return userOb;
-    }
-
-    // Island.is have announced that the new certificate will be in effect from June 14th 2022 at 08:00 AM UTC.
-    function getActiveCertPath() {
-        // Automatically switch the certificate on that date.
-        if (
-            new Date().getTime() >
-            new Date("2022-06-14T08:00:00.000Z").getTime()
-        ) {
-            return "./cert/FullgiltAudkenni_new.pem";
-        } else {
-            return "./cert/FullgiltAudkenni.pem";
-        }
     }
 
     // Utility method to extend defaults with user options

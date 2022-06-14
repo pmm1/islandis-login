@@ -1,8 +1,6 @@
 # islandis-login
 
-### IMPORTANT --> On June 14th, 2022 at around 08:00 AM GMT a new certificate will be issued by Island.is
-
-For this library to keep working after the certificate update, **make sure that you update to version 1.4.0 or higher.** Version 1.4.0 will automatically switch to the new certificate at 08:00 AM GMT. Until that date version 1.4.0 of this library will utilize the old certificate meaning that it's safe to update to 1.4.0 before June 14th.
+### Latest version --> 1.4.3
 
 ---
 

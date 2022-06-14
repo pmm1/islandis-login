@@ -1,6 +1,6 @@
 {
     "name": "islandis-login",
-    "version": "1.4.2",
+    "version": "1.4.3",
     "description": "Island.is Identification and Authentication Services (Login) for Node.js",
     "main": "index.js",
     "types": "index.d.ts",

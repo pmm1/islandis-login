@@ -61,15 +61,15 @@ function checkSignature(doc, pem, xml) {
 
 function isCertificateValid(certificate, certPath) {
     // Reference: https://www.audkenni.is/adstod/skilriki-kortum/skilrikjakedjur/
-    const certFromPem = Certificate.fromPEM(readFileSync(certPath));
+    const FullgiltAudkenni = Certificate.fromPEM(readFileSync(certPath));
 
     // we only need to verify the authority cert because that is the cert used
     // to sign the message from Island.is
     if (
-        certFromPem.verifySubjectKeyIdentifier() &&
+        FullgiltAudkenni.verifySubjectKeyIdentifier() &&
         certificate.verifySubjectKeyIdentifier() &&
-        certFromPem.checkSignature(certificate) === null &&
-        certificate.isIssuer(certFromPem)
+        FullgiltAudkenni.checkSignature(certificate) === null &&
+        certificate.isIssuer(FullgiltAudkenni)
     ) {
         return true;
     }
