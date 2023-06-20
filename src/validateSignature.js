@@ -75,19 +75,16 @@ function checkSignature(doc, pem, xml) {
     return isValid;
 }
 
-function isCertificateValid(certificate) {
+function isCertificateValid(certificate, audkenniCert) {
     // Reference: https://www.audkenni.is/adstod/skilriki-kortum/skilrikjakedjur/
-    const certFromPem = Certificate.fromPEM(
-        readFileSync(path.resolve(__dirname, "../cert/FullgiltAudkenni.pem"))
-    );
 
     // we only need to verify the authority cert because that is the cert used
     // to sign the message from Island.is
     if (
-        certFromPem.verifySubjectKeyIdentifier() &&
+        audkenniCert.verifySubjectKeyIdentifier() &&
         certificate.verifySubjectKeyIdentifier() &&
-        certFromPem.checkSignature(certificate) === null &&
-        certificate.isIssuer(certFromPem)
+        audkenniCert.checkSignature(certificate) === null &&
+        certificate.isIssuer(audkenniCert)
     ) {
         return true;
     }
@@ -105,7 +102,7 @@ function certToPEM(cert) {
     and validates digital signature of XML.
 
 */
-function validate(xml, signature) {
+function validate(xml, signature, audkenniCert) {
     return new Promise((resolve, reject) => {
         const doc = new DOMParser().parseFromString(xml);
 
@@ -127,7 +124,7 @@ function validate(xml, signature) {
 
         // Verify that the certificate we get from the Island.is request
         // is signed and issued by Traustur Bunadur certificate.
-        if (!isCertificateValid(cert)) {
+        if (!isCertificateValid(cert, audkenniCert)) {
             return reject(
                 "The XML document is not signed by Þjóðskrá Íslands."
             );
