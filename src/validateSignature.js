@@ -13,14 +13,14 @@ const { readFileSync } = require("fs");
 function FileKeyInfo(key) {
     this.key = key;
 
-    this.getKeyInfo = function(key, prefix) {
+    this.getKeyInfo = function (key, prefix) {
         prefix = prefix || "";
         prefix = prefix ? prefix + ":" : prefix;
 
         return `<${prefix}X509Data></${prefix}X509Data>`;
     };
 
-    this.getKey = function() {
+    this.getKey = function () {
         return this.key;
     };
 }
