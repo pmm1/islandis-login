@@ -25,6 +25,21 @@ function FileKeyInfo(key) {
     };
 }
 
+function fromPemFile(certPath) {
+    const pem = path.resolve(__dirname, `../${certPath}`);
+    return Certificate.fromPEM(readFileSync(pem));
+}
+
+function fromPemString(cert) {
+    return Certificate.fromPEM(cert);
+}
+
+function getCertificate(options) {
+    return options.cert === undefined
+        ? fromPemFile(options.certPath)
+        : fromPemString(options.cert);
+}
+
 function isCertificateDataValid(cert) {
     const { serialName } = cert.subject;
     const { organizationName } = cert.issuer;
@@ -86,7 +101,7 @@ function certToPEM(cert) {
 
 /*
 
-    Validates x509 certificate validity, checks certificate 
+    Validates x509 certificate validity, checks certificate
     and validates digital signature of XML.
 
 */
@@ -124,4 +139,5 @@ function validate(xml, signature) {
 
 module.exports = {
     validateCert: validate,
+    getCertificate,
 };

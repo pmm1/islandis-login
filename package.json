@@ -5,8 +5,8 @@
     "main": "index.js",
     "types": "index.d.ts",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "format": "prettier --write index.js '**/*/*.js'"
+        "test": "jest",
+        "format": "npx eslint-config-prettier --write '*.js' '**/*/*.js'"
     },
     "repository": {
         "type": "git",
@@ -34,6 +34,8 @@
         "xmldom": "^0.3.0"
     },
     "devDependencies": {
+        "eslint-config-prettier": "^8.8.0",
+        "jest": "^29.5.0",
         "prettier": "^2.8.8"
     }
 }

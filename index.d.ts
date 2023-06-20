@@ -44,6 +44,7 @@ declare module '@island.is/login' {
     }: {
       verifyDates?: boolean;
       audienceUrl: string | null;
+      certificate?: string;
     }) { }
 
     verify(token: string): Promise<VerifyResult>;

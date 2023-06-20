@@ -1,3 +1,6 @@
 node_modules/
 temp/
 .DS_store
+fixtures/*
+!fixtures/user.example.json
+!fixtures/token.example.json
