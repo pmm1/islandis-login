@@ -9,6 +9,14 @@ const getLoginWithPemFile = () => {
     });
 };
 
+const getLoginWithCustomPemFile = () => {
+    return new IslandISLogin({
+        audienceUrl: audience,
+        verifyDates: false,
+        certPath: "cert/FullgiltAudkenni.pem",
+    });
+};
+
 const getLoginWithPemString = () => {
     return new IslandISLogin({
         audienceUrl: audience,
@@ -68,6 +76,22 @@ test("verify from pem file returns user", async () => {
 
 test("verify from pem string returns user", async () => {
     const login = getLoginWithPemString();
+    const data = await login
+        .verify(token)
+        .then((user) => {
+            return user;
+        })
+        .catch((err) => {
+            console.log("Error verifying token");
+            console.log(err);
+            return err;
+        });
+
+    expect(data).toStrictEqual(user);
+});
+
+test("verify from custom pem string returns user", async () => {
+    const login = getLoginWithCustomPemFile();
     const data = await login
         .verify(token)
         .then((user) => {
