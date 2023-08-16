@@ -1,0 +1,17 @@
+{
+    "user": {
+        "kennitala": "0123456789",
+        "mobile": "+3540123456",
+        "fullname": "Jón Jónsson",
+        "ip": "127.0.0.1",
+        "userAgent": "Mozilla/5.0 (X11; Linux x86_64; rv:103.0) Gecko/20100101 Firefox/103.0",
+        "destinationSSN": "0123456789",
+        "authId": "",
+        "authenticationMethod": "Rafræn símaskilríki"
+    },
+    "extra": {
+        "destination": "https://example.com/login",
+        "audienceUrl": "example.com",
+        "dates": { "notBefore": 1659972236713, "notOnOrAfter": 1659972566713 }
+    }
+}

@@ -40,10 +40,14 @@ declare module '@island.is/login' {
   class IslandisLogin {
     constructor({
       verifyDates = true,
-      audienceUrl = null
+      audienceUrl = null,
+      cert = undefined,
+      certPath = undefined
     }: {
       verifyDates?: boolean;
       audienceUrl: string | null;
+      cert?: string;
+      certPath?: string;
     }) { }
 
     verify(token: string): Promise<VerifyResult>;

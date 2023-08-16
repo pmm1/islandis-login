@@ -43,7 +43,7 @@ To install the module using npm:
 $ npm i --save islandis-login
 ```
 
-In Node.js:
+In Node.js, using the bundled Audkenni certificate:
 
 ```js
 const IslandISLogin = require("islandis-login");
@@ -54,15 +54,54 @@ const token =
 const loginIS = new IslandISLogin({
     audienceUrl: "api.vefur.is", // should be the hostname of the domain you registered with Island to which the request is sent. Used for validation purposes.
 });
+```
 
+Or by passing a relative path to the Audkenni cert:
+
+```js
+const IslandISLogin = require("islandis-login");
+
+const token =
+    "[token you received to your callbackURI from Island.is login attempt]";
+
+const loginIS = new IslandISLogin({
+    audienceUrl: "api.vefur.is",
+    certPath: "cert/SomeOtherCert.pem",
+});
+```
+
+Or pass the cert as string:
+
+```js
+const IslandISLogin = require("islandis-login");
+
+const token =
+    "[token you received to your callbackURI from Island.is login attempt]";
+
+const cert = `
+-----BEGIN CERTIFICATE-----
+MIIFfDCCA2SgAwIBAgICAyQwDQYJKoZIhvcNAQELBQAwazELMAkGA1UEBhMCSVMx
+...
+-----END CERTIFICATE-----
+`;
+
+const loginIS = new IslandISLogin({
+    audienceUrl: "api.vefur.is",
+    cert,
+});
+```
+
+Now verify the incoming token:
+
+```js
 loginIS
     .verify(token)
-    .then(user => {
+    .then((user) => {
         // Token is valid, return user object
         console.log("User object ");
         console.log(user);
     })
-    .catch(err => {
+    .catch((err) => {
         // Error verifying signature or token is invalid.
         console.log("Error verifying token");
         console.log(err);
@@ -145,6 +184,12 @@ List of potential errors that you might encounter calling **`.verify()`**:
     "reason": "The AudienceUrl you provide must match data from Island.is."
 }
 ```
+
+## Tests
+
+See the [fixtures](./fixtures/) example files.
+
+You need a valid token returned from island.is that deserializes to a user object.
 
 ## Projects utilizing the library
 

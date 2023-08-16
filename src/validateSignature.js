@@ -13,16 +13,31 @@ const { readFileSync } = require("fs");
 function FileKeyInfo(key) {
     this.key = key;
 
-    this.getKeyInfo = function(key, prefix) {
+    this.getKeyInfo = function (key, prefix) {
         prefix = prefix || "";
         prefix = prefix ? prefix + ":" : prefix;
 
         return `<${prefix}X509Data></${prefix}X509Data>`;
     };
 
-    this.getKey = function() {
+    this.getKey = function () {
         return this.key;
     };
+}
+
+function fromPemFile(certPath) {
+    const pem = path.resolve(__dirname, `../${certPath}`);
+    return Certificate.fromPEM(readFileSync(pem));
+}
+
+function fromPemString(cert) {
+    return Certificate.fromPEM(cert);
+}
+
+function getCertificate(options) {
+    return options.cert === undefined
+        ? fromPemFile(options.certPath)
+        : fromPemString(options.cert);
 }
 
 function isCertificateDataValid(cert) {
@@ -60,19 +75,16 @@ function checkSignature(doc, pem, xml) {
     return isValid;
 }
 
-function isCertificateValid(certificate) {
+function isCertificateValid(certificate, audkenniCert) {
     // Reference: https://www.audkenni.is/adstod/skilriki-kortum/skilrikjakedjur/
-    const certFromPem = Certificate.fromPEM(
-        readFileSync(path.resolve(__dirname, "../cert/FullgiltAudkenni.pem"))
-    );
 
     // we only need to verify the authority cert because that is the cert used
     // to sign the message from Island.is
     if (
-        certFromPem.verifySubjectKeyIdentifier() &&
+        audkenniCert.verifySubjectKeyIdentifier() &&
         certificate.verifySubjectKeyIdentifier() &&
-        certFromPem.checkSignature(certificate) === null &&
-        certificate.isIssuer(certFromPem)
+        audkenniCert.checkSignature(certificate) === null &&
+        certificate.isIssuer(audkenniCert)
     ) {
         return true;
     }
@@ -86,11 +98,11 @@ function certToPEM(cert) {
 
 /*
 
-    Validates x509 certificate validity, checks certificate 
+    Validates x509 certificate validity, checks certificate
     and validates digital signature of XML.
 
 */
-function validate(xml, signature) {
+function validate(xml, signature, audkenniCert) {
     return new Promise((resolve, reject) => {
         const doc = new DOMParser().parseFromString(xml);
 
@@ -112,7 +124,7 @@ function validate(xml, signature) {
 
         // Verify that the certificate we get from the Island.is request
         // is signed and issued by Traustur Bunadur certificate.
-        if (!isCertificateValid(cert)) {
+        if (!isCertificateValid(cert, audkenniCert)) {
             return reject(
                 "The XML document is not signed by Þjóðskrá Íslands."
             );
@@ -124,4 +136,5 @@ function validate(xml, signature) {
 
 module.exports = {
     validateCert: validate,
+    getCertificate,
 };

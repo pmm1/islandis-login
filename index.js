@@ -1,10 +1,12 @@
 const { parseStringPromise } = require("xml2js");
-const { validateCert } = require("./src/validateSignature.js");
+const { validateCert, getCertificate } = require("./src/validateSignature.js");
 
-const IslandISLogin = function() {
+const IslandISLogin = function () {
     const defaults = {
         verifyDates: true,
         audienceUrl: null,
+        cert: undefined,
+        certPath: "cert/FullgiltAudkenni.pem",
     };
 
     // Create options by extending defaults with the passed in arguments
@@ -13,14 +15,13 @@ const IslandISLogin = function() {
     } else {
         this.options = defaults;
     }
-
-    IslandISLogin.prototype.verify = token => {
+    IslandISLogin.prototype.verify = (token) => {
         const xml = getXmlFromToken(token);
 
         return new Promise((resolve, reject) => {
             // Parse XML to JSON
             parseStringPromise(xml)
-                .then(async json => {
+                .then(async (json) => {
                     const x509signature =
                         json.Response.Signature[0].KeyInfo[0].X509Data[0]
                             .X509Certificate[0];
@@ -28,7 +29,8 @@ const IslandISLogin = function() {
                     // Validate signature of XML document from Island.is, verify that the
                     // XML document was signed by Island.is and verify certificate issuer.
                     try {
-                        await validateCert(xml, x509signature);
+                        const certificate = getCertificate(this.options);
+                        await validateCert(xml, x509signature, certificate);
                     } catch (e) {
                         return reject({
                             id: "CERTIFICATE-INVALID",
@@ -43,8 +45,7 @@ const IslandISLogin = function() {
                     if (!this.options.audienceUrl) {
                         return reject({
                             id: "AUDIENCEURL-MISSING",
-                            reason:
-                                "You must provide an 'audienceUrl' in the options when calling the constructor function.",
+                            reason: "You must provide an 'audienceUrl' in the options when calling the constructor function.",
                         });
                     }
 
@@ -54,8 +55,7 @@ const IslandISLogin = function() {
                     if (this.options.audienceUrl !== audienceUrl) {
                         return reject({
                             id: "AUDIENCEURL-NOT-MATCHING",
-                            reason:
-                                "The AudienceUrl you provide must match data from Island.is.",
+                            reason: "The AudienceUrl you provide must match data from Island.is.",
                         });
                     }
 
@@ -106,11 +106,10 @@ const IslandISLogin = function() {
                         },
                     });
                 })
-                .catch(err => {
+                .catch((err) => {
                     return reject({
                         id: "INVALID-TOKEN-XML",
-                        reason:
-                            "Invalid login token - cannot parse XML from Island.is.",
+                        reason: "Invalid login token - cannot parse XML from Island.is.",
                     });
                 });
         });
