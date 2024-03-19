@@ -1,6 +1,6 @@
 const path = require("path");
 const { xpath } = require("xml-crypto");
-const { DOMParser } = require("xmldom");
+const { DOMParser } = require("@xmldom/xmldom");
 const { SignedXml } = require("xml-crypto");
 const { Certificate } = require("@fidm/x509");
 const { readFileSync } = require("fs");
